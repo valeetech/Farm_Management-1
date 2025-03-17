@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class BudgetScreen extends StatefulWidget {
+  const BudgetScreen({super.key});
+
   @override
   _BudgetScreenState createState() => _BudgetScreenState();
 }
@@ -30,16 +32,16 @@ class _BudgetScreenState extends State<BudgetScreen> {
         elevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
+        title: const Text(
           'Budget Manager',
           style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.dark_mode, color: Colors.black87),
+            icon: const Icon(Icons.dark_mode, color: Colors.black87),
             onPressed: () {
               // Theme switching functionality
             },
@@ -47,22 +49,22 @@ class _BudgetScreenState extends State<BudgetScreen> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildBudgetOverview(),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             _buildBudgetCategories(),
           ],
         ),
       ),
       floatingActionButton: Container(
-        margin: EdgeInsets.all(16),
+        margin: const EdgeInsets.all(16),
         child: FloatingActionButton.extended(
           onPressed: () => _showAddCategoryDialog(context),
-          icon: Icon(Icons.add),
-          label: Text('Add Budget'),
+          icon: const Icon(Icons.add),
+          label: const Text('Add Budget'),
           backgroundColor: Colors.blue,
         ),
       ),
@@ -74,7 +76,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
       stream: FirebaseFirestore.instance.collection('budget_categories').snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
 
         double totalBudget = 0;
@@ -90,7 +92,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
 
         return Container(
           width: double.infinity,
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.blue,
             borderRadius: BorderRadius.circular(15),
@@ -98,14 +100,14 @@ class _BudgetScreenState extends State<BudgetScreen> {
               BoxShadow(
                 color: Colors.blue.withOpacity(0.2),
                 blurRadius: 10,
-                offset: Offset(0, 5),
+                offset: const Offset(0, 5),
               ),
             ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Total Budget Overview',
                 style: TextStyle(
                   color: Colors.white,
@@ -113,7 +115,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -135,15 +137,15 @@ class _BudgetScreenState extends State<BudgetScreen> {
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white70,
             fontSize: 14,
           ),
         ),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         Text(
           '\$${amount.toStringAsFixed(2)}',
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -157,30 +159,30 @@ class _BudgetScreenState extends State<BudgetScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Budget Categories',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance.collection('budget_categories').snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
 
             if (snapshot.data!.docs.isEmpty) {
-              return Center(
+              return const Center(
                 child: Text('No budget categories added yet'),
               );
             }
 
             return ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
                 var doc = snapshot.data!.docs[index];
@@ -203,9 +205,9 @@ class _BudgetScreenState extends State<BudgetScreen> {
     double progress = total > 0 ? spent / total : 0;
 
     return Card(
-      margin: EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 12),
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -214,7 +216,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
               children: [
                 Text(
                   category,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -222,7 +224,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.edit, color: Colors.blue),
+                      icon: const Icon(Icons.edit, color: Colors.blue),
                       onPressed: () => _showEditCategoryDialog(
                         context,
                         docId,
@@ -232,14 +234,14 @@ class _BudgetScreenState extends State<BudgetScreen> {
                       ),
                     ),
                     IconButton(
-                      icon: Icon(Icons.delete, color: Colors.red),
+                      icon: const Icon(Icons.delete, color: Colors.red),
                       onPressed: () => _deleteCategory(context, docId),
                     ),
                   ],
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             LinearProgressIndicator(
               value: progress,
               backgroundColor: Colors.grey[200],
@@ -248,7 +250,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
               ),
               minHeight: 8,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -292,37 +294,37 @@ class _BudgetScreenState extends State<BudgetScreen> {
           children: [
             TextField(
               controller: _categoryController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Category Name',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: _totalController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Total Budget',
                 border: OutlineInputBorder(),
                 prefixText: '\$',
               ),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: _spentController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Amount Spent',
                 border: OutlineInputBorder(),
                 prefixText: '\$',
               ),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           ElevatedButton(
             onPressed: () => _saveBudgetCategory(context, docId),
@@ -375,12 +377,12 @@ class _BudgetScreenState extends State<BudgetScreen> {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Delete Category'),
-        content: Text('Are you sure you want to delete this budget category?'),
+        title: const Text('Delete Category'),
+        content: const Text('Are you sure you want to delete this budget category?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -391,7 +393,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            child: Text('Delete'),
+            child: const Text('Delete'),
           ),
         ],
       ),

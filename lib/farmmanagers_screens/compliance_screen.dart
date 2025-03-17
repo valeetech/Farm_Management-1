@@ -2,31 +2,33 @@
 import 'package:flutter/material.dart';
 
 class ComplianceScreen extends StatelessWidget {
+  const ComplianceScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Compliance Report'),
+        title: const Text('Compliance Report'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildComplianceOverview(),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             _buildSafetySection(),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             _buildEnvironmentalSection(),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             _buildQualitySection(),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: Icon(Icons.add),
         tooltip: 'Add Compliance Report',
+        child: Icon(Icons.add),
       ),
     );
   }
@@ -34,18 +36,18 @@ class ComplianceScreen extends StatelessWidget {
   Widget _buildComplianceOverview() {
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Compliance Overview',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -67,10 +69,10 @@ class ComplianceScreen extends StatelessWidget {
           label,
           style: TextStyle(color: Colors.grey[600]),
         ),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         Text(
           value,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
@@ -83,14 +85,14 @@ class ComplianceScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Safety Compliance',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         _buildComplianceItem(
           'Equipment Safety',
           'Compliant',
@@ -117,14 +119,14 @@ class ComplianceScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Environmental Compliance',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         _buildComplianceItem(
           'Waste Management',
           'Compliant',
@@ -151,14 +153,14 @@ class ComplianceScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Quality Control',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         _buildComplianceItem(
           'Product Standards',
           'Compliant',
@@ -188,14 +190,14 @@ class ComplianceScreen extends StatelessWidget {
       bool isCompliant,
       ) {
     return Card(
-      margin: EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         title: Text(title),
         subtitle: Text('Last checked: $date'),
         trailing: Chip(
           label: Text(status),
           backgroundColor: isCompliant ? Colors.green : Colors.orange,
-          labelStyle: TextStyle(color: Colors.white),
+          labelStyle: const TextStyle(color: Colors.white),
         ),
       ),
     );

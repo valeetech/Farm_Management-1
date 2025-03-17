@@ -6,14 +6,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class PlanCoordinateScreen extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  const PlanCoordinateScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Plan & Coordinate'),
+        title: const Text('Plan & Coordinate'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -28,18 +30,18 @@ class PlanCoordinateScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddTaskDialog(context),
-        child: Icon(Icons.add),
         tooltip: 'Add Task',
+        child: Icon(Icons.add),
       ),
     );
   }
 
   Widget _buildSection(String title) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
@@ -52,7 +54,7 @@ class PlanCoordinateScreen extends StatelessWidget {
       stream: _firestore.collection('tasks').snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
 
         final tasks = snapshot.data!.docs;
@@ -71,7 +73,7 @@ class PlanCoordinateScreen extends StatelessWidget {
     final isCompleted = data['isCompleted'] ?? false;
 
     return Card(
-      margin: EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: Icon(
           isCompleted ? Icons.check_circle : Icons.pending,
@@ -80,7 +82,7 @@ class PlanCoordinateScreen extends StatelessWidget {
         title: Text(task),
         subtitle: Text(time),
         trailing: IconButton(
-          icon: Icon(Icons.delete, color: Colors.red),
+          icon: const Icon(Icons.delete, color: Colors.red),
           onPressed: () => _firestore.collection('tasks').doc(doc.id).delete(),
         ),
         onTap: () => _firestore
@@ -92,7 +94,7 @@ class PlanCoordinateScreen extends StatelessWidget {
   }
 
   Widget _buildCalendar() {
-    return Card(
+    return const Card(
       child: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -110,7 +112,7 @@ class PlanCoordinateScreen extends StatelessWidget {
       stream: _firestore.collection('team').snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
 
         final members = snapshot.data!.docs;
@@ -128,7 +130,7 @@ class PlanCoordinateScreen extends StatelessWidget {
     final role = data['role'] ?? '';
 
     return Card(
-      margin: EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: CircleAvatar(
           child: Text(name.isNotEmpty ? name[0] : ''),
@@ -136,7 +138,7 @@ class PlanCoordinateScreen extends StatelessWidget {
         title: Text(name),
         subtitle: Text(role),
         trailing: IconButton(
-          icon: Icon(Icons.delete, color: Colors.red),
+          icon: const Icon(Icons.delete, color: Colors.red),
           onPressed: () => _firestore.collection('team').doc(doc.id).delete(),
         ),
       ),
@@ -144,24 +146,24 @@ class PlanCoordinateScreen extends StatelessWidget {
   }
 
   void _showAddTaskDialog(BuildContext context) {
-    final _taskController = TextEditingController();
-    final _timeController = TextEditingController();
+    final taskController = TextEditingController();
+    final timeController = TextEditingController();
 
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Add Task'),
+          title: const Text('Add Task'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
-                controller: _taskController,
-                decoration: InputDecoration(labelText: 'Task'),
+                controller: taskController,
+                decoration: const InputDecoration(labelText: 'Task'),
               ),
               TextField(
-                controller: _timeController,
-                decoration: InputDecoration(labelText: 'Time'),
+                controller: timeController,
+                decoration: const InputDecoration(labelText: 'Time'),
               ),
             ],
           ),
@@ -170,12 +172,12 @@ class PlanCoordinateScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
-                final task = _taskController.text.trim();
-                final time = _timeController.text.trim();
+                final task = taskController.text.trim();
+                final time = timeController.text.trim();
 
                 if (task.isNotEmpty && time.isNotEmpty) {
                   _firestore.collection('tasks').add({
@@ -187,7 +189,7 @@ class PlanCoordinateScreen extends StatelessWidget {
                   Navigator.pop(context);
                 }
               },
-              child: Text('Add'),
+              child: const Text('Add'),
             ),
           ],
         );

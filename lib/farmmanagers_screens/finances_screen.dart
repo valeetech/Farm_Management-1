@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FinancesScreen extends StatefulWidget {
+  const FinancesScreen({super.key});
+
   @override
   _FinancesScreenState createState() => _FinancesScreenState();
 }
@@ -28,7 +30,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
       _amountController.clear();
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Transaction added successfully!')),
+        const SnackBar(content: Text('Transaction added successfully!')),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -58,38 +60,38 @@ class _FinancesScreenState extends State<FinancesScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'Add Transaction',
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       IconButton(
-                        icon: Icon(Icons.close),
+                        icon: const Icon(Icons.close),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   TextField(
                     controller: _descriptionController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Description',
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   TextField(
                     controller: _amountController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Amount',
                       border: OutlineInputBorder(),
                       prefixText: '\$',
                     ),
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   DropdownButtonFormField<String>(
                     value: _transactionType,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Transaction Type',
                     ),
@@ -105,22 +107,22 @@ class _FinancesScreenState extends State<FinancesScreen> {
                       );
                     }).toList(),
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   SizedBox(
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
                       onPressed: _addTransaction,
-                      child: Text('Save Transaction'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).primaryColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
+                      child: Text('Save Transaction'),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                 ],
               ),
             );
@@ -152,7 +154,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
       stream: _getTransactions(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
 
         final transactions = snapshot.data!.docs;
@@ -174,15 +176,15 @@ class _FinancesScreenState extends State<FinancesScreen> {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Financial Overview',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -209,7 +211,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
             fontSize: 14,
           ),
         ),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         Text(
           value,
           style: TextStyle(
@@ -226,28 +228,28 @@ class _FinancesScreenState extends State<FinancesScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Recent Transactions',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         StreamBuilder<QuerySnapshot>(
           stream: _getTransactions(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
 
             final transactions = snapshot.data!.docs;
             if (transactions.isEmpty) {
-              return Center(
+              return const Center(
                 child: Text('No transactions yet'),
               );
             }
 
             return ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: transactions.length,
               itemBuilder: (context, index) {
                 final transaction = transactions[index];
@@ -271,13 +273,13 @@ class _FinancesScreenState extends State<FinancesScreen> {
     String formattedDate = '${transactionDate.day}/${transactionDate.month}/${transactionDate.year}';
 
     return Card(
-      margin: EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: 8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),
       child: ListTile(
         leading: Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: type == 'Revenue' ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1),
             borderRadius: BorderRadius.circular(8),
@@ -289,7 +291,7 @@ class _FinancesScreenState extends State<FinancesScreen> {
         ),
         title: Text(
           description,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: Text(formattedDate),
         trailing: Text(
@@ -308,21 +310,21 @@ class _FinancesScreenState extends State<FinancesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Finances'),
+        title: const Text('Finances'),
         elevation: 0,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddTransactionForm,
-        child: Icon(Icons.add),
         elevation: 2,
+        child: Icon(Icons.add),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildFinancialOverview(),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             _buildTransactionsSection(),
           ],
         ),

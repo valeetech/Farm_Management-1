@@ -6,11 +6,13 @@ import 'compliance_screen.dart';
 import 'finances_screen.dart';
 
 class FarmManagersDashboardScreen extends StatelessWidget {
+  const FarmManagersDashboardScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Farm Managers Dashboard'),
+        title: const Text('Farm Managers Dashboard'),
       ),
       body: GridView.count(
         crossAxisCount: 2,
@@ -75,7 +77,7 @@ class DashboardCard extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
 
-  const DashboardCard({
+  const DashboardCard({super.key, 
     required this.title,
     required this.icon,
     required this.onTap,
@@ -85,17 +87,17 @@ class DashboardCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
-      margin: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
       child: InkWell(
         onTap: onTap,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, size: 40, color: Colors.green),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               title,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
           ],
